@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ProductController;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,4 +24,7 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 Route::get('/products', 'App\Http\Controllers\ProductController@showProducts')->name('products');
 Route::get('/regist','App\Http\Controllers\ProductController@showRegistForm')->name('regist');
+// 登録
 Route::post('/regist','App\Http\Controllers\ProductController@registSubmit')->name('submit');
+// 削除
+Route::post('/destroy{id}', [ProductController::class, 'destroy'])->name('destroy');

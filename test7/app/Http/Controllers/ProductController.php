@@ -39,4 +39,17 @@ class ProductController extends Controller
         // 処理が完了したらregistにリダイレクト
         return redirect(route('regist'));
     }
+
+    /**
+     * 削除処理
+     */
+    public function destroy($id)
+    {
+        // Productsテーブルから指定のIDのレコード1件を取得
+        $Product = Product::find($id);
+        // レコードを削除
+        $Product->delete();
+        // 削除したら一覧画面にリダイレクト
+        return redirect(route('products'));
+    }
 }

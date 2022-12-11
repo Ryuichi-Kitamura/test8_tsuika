@@ -47,12 +47,13 @@
                         <th>在庫</th>
                         <th>コメント</th>
                         <th>画像パス</th>
+                        <th>削除ボタン</th>
                     </tr>
                 </thead>
                 <tbody>
                 @foreach ($products as $product)
                     <tr>
-                        <td>{{ $product->id }}</td>
+                        <td>{{ $product->product_id }}</td>
                         <td>{{ $product->company_id }}</td>
                         <td>{{ $product->company_name }}</td>
                         <td>{{ $product->product_name }}</td>
@@ -60,6 +61,12 @@
                         <td>{{ $product->stock }}</td>
                         <td>{{ $product->comment }}</td>
                         <td><img src="{{ $product->img_path }}"></td>
+                        <td>
+                            <form action="{{ route('destroy', ['id'=>$product->id]) }}" method="POST">
+                                @csrf
+                                <button type="submit" class="btn btn-destroy">削除</button>
+                            </form>
+                        </td>
                     </tr>
                 @endforeach
                 </tbody>
