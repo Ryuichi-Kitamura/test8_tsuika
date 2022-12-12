@@ -1,3 +1,4 @@
+@extends('layouts.app_layout')
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>
@@ -24,7 +25,7 @@
         <!-- <div class="relative flex items-top justify-center min-h-screen bg-gray-100 dark:bg-gray-900 sm:items-center py-4 sm:pt-0"> -->
         <div>
             @if (Route::has('login'))
-                <div class="hidden fixed top-0 right-0 px-6 py-4 sm:block">
+                <div>
                     @auth
                         <a href="{{ url('/home') }}" class="text-sm text-gray-700 dark:text-gray-500 underline">Home</a>
                     @else
@@ -36,7 +37,7 @@
                     @endauth
                 </div>
             @endif
-            <table>
+            <table class="table table">
                 <thead>
                     <tr>
                         <th>商品ID</th>
@@ -53,7 +54,7 @@
                 <tbody>
                 @foreach ($products as $product)
                     <tr>
-                        <td>{{ $product->product_id }}</td>
+                        <td>{{ $product->id }}</td>
                         <td>{{ $product->company_id }}</td>
                         <td>{{ $product->company_name }}</td>
                         <td>{{ $product->product_name }}</td>

@@ -10,7 +10,12 @@ class Product extends Model
 {
     public function getList() {
         // productsテーブルからデータを取得
-        $products = DB::table('products') -> join('companies', 'products.company_id', '=', 'companies.id') -> get();
+        $products = DB::table('products')
+        ->select('products.id', 'companies.id as company_id', 'companies.company_name', 'products.product_name',
+        'products.price', 'products.stock', 'products.comment', 'products.img_path')
+        ->join('companies', 'products.company_id', '=', 'companies.id')
+        ->orderBy("products.id")
+        ->get();
 
         return $products;
     }
