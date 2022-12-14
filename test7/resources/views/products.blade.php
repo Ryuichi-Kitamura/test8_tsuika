@@ -48,6 +48,7 @@
                         <th>在庫</th>
                         <th>コメント</th>
                         <th>画像パス</th>
+                        <th>詳細表示ボタン</th>
                         <th>削除ボタン</th>
                     </tr>
                 </thead>
@@ -62,6 +63,7 @@
                         <td>{{ $product->stock }}</td>
                         <td>{{ $product->comment }}</td>
                         <td><img src="{{ $product->img_path }}"></td>
+                        <td><a href="{{ route('show', ['id'=>$product->id]) }}" class="btn btn-primary">詳細表示</a></td>
                         <td>
                             <form action="{{ route('destroy', ['id'=>$product->id]) }}" method="POST">
                                 @csrf

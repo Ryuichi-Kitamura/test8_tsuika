@@ -26,5 +26,7 @@ Route::get('/products', 'App\Http\Controllers\ProductController@showProducts')->
 Route::get('/regist','App\Http\Controllers\ProductController@showRegistForm')->name('regist');
 // 登録
 Route::post('/regist','App\Http\Controllers\ProductController@registSubmit')->name('submit');
+// 詳細
+Route::get('/show/{id}', [ProductController::class, 'show'])->name('show');
 // 削除
 Route::post('/destroy{id}', [ProductController::class, 'destroy'])->name('destroy');

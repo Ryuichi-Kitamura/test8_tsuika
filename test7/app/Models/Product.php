@@ -20,6 +20,18 @@ class Product extends Model
         return $products;
     }
 
+    public function getProduct($id) {
+        // productsテーブルから商品IDに一致するデータを1件取得
+        $product = DB::table('products')
+        ->select('products.id', 'companies.id as company_id', 'companies.company_name', 'products.product_name',
+        'products.price', 'products.stock', 'products.comment', 'products.img_path')
+        ->where('products.id', '=', $id)
+        ->join('companies', 'products.company_id', '=', 'companies.id')
+        ->first();
+
+        return $product;
+    }
+
     public function registProduct($data) {
         // 登録処理
         DB::table('products')->insert([

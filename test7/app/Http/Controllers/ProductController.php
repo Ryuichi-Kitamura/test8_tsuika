@@ -41,6 +41,16 @@ class ProductController extends Controller
     }
 
     /**
+     * 詳細画面の表示
+     */
+    public function show($id)
+    {
+        $model = new Product();
+        $product = $model->getProduct($id);
+        return view('show', compact('product'));
+    }
+
+    /**
      * 削除処理
      */
     public function destroy($id)
