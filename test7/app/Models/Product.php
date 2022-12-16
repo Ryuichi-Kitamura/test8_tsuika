@@ -43,4 +43,21 @@ class Product extends Model
             'img_path' => $data->imgPath,
         ]);
     }
+
+    /**
+     * 更新処理
+     */
+    public function updateProduct($request, $product)
+    {
+        DB::table('products')->where('id', $product->id)
+            ->update([
+            'id' => $product->id,
+            'company_id' => $request->companyId,
+            'product_name' => $request->productName,
+            'price' => $request->price,
+            'stock' => $request->stock,
+            'comment' => $request->comment,
+            'img_path' => $request->imgPath,
+        ]);
+    }
 }

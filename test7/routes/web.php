@@ -30,3 +30,7 @@ Route::post('/regist','App\Http\Controllers\ProductController@registSubmit')->na
 Route::get('/show/{id}', [ProductController::class, 'show'])->name('show');
 // 削除
 Route::post('/destroy{id}', [ProductController::class, 'destroy'])->name('destroy');
+// 編集画面
+Route::get('/edit/{id}','App\Http\Controllers\ProductController@showEditForm')->name('edit');
+// 編集
+Route::post('/edit/{id}','App\Http\Controllers\ProductController@update')->name('update');
