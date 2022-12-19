@@ -21,15 +21,18 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-
-Route::get('/products', 'App\Http\Controllers\ProductController@showProducts')->name('products');
+// 一覧画面
+//Route::get('/products', 'App\Http\Controllers\ProductController@showProducts')->name('products');
+// 検索
+Route::get('/products', 'App\Http\Controllers\ProductController@searchProducts')->name('search');
+// 削除
+Route::post('/destroy{id}', [ProductController::class, 'destroy'])->name('destroy');
+// 登録画面
 Route::get('/regist','App\Http\Controllers\ProductController@showRegistForm')->name('regist');
 // 登録
 Route::post('/regist','App\Http\Controllers\ProductController@registSubmit')->name('submit');
-// 詳細
+// 詳細画面
 Route::get('/show/{id}', [ProductController::class, 'show'])->name('show');
-// 削除
-Route::post('/destroy{id}', [ProductController::class, 'destroy'])->name('destroy');
 // 編集画面
 Route::get('/edit/{id}','App\Http\Controllers\ProductController@showEditForm')->name('edit');
 // 編集

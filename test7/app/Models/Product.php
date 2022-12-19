@@ -34,13 +34,16 @@ class Product extends Model
 
     public function registProduct($data) {
         // 登録処理
-        DB::table('products')->insert([
+        DB::table('products')
+        ->insert([
             'company_id' => $data->companyId,
             'product_name' => $data->productName,
             'price' => $data->price,
             'stock' => $data->stock,
             'comment' => $data->comment,
             'img_path' => $data->imgPath,
+            'created_at' => now(),
+            'updated_at' => now(),
         ]);
     }
 
@@ -49,15 +52,16 @@ class Product extends Model
      */
     public function updateProduct($request, $product)
     {
-        DB::table('products')->where('id', $product->id)
-            ->update([
-            'id' => $product->id,
+        DB::table('products')
+        ->where('id', $product->id)
+        ->update([
             'company_id' => $request->companyId,
             'product_name' => $request->productName,
             'price' => $request->price,
             'stock' => $request->stock,
             'comment' => $request->comment,
             'img_path' => $request->imgPath,
+            'updated_at' => now(),
         ]);
     }
 }

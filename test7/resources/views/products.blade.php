@@ -37,6 +37,39 @@
                     @endauth
                 </div>
             @endif
+
+            <div class="search">
+                <form action="{{ route('search') }}" method="GET">
+                @csrf
+                    <div class="form-group">
+                        <div>
+                            <label for="productName">商品名
+                                <div>
+                                    <input type="text" class="form-control" id="productName" name="productName" value="{{ $productName }}">
+                                </div>
+                            </label>
+                        </div>
+
+                        <div>
+                            <label for="companyName">メーカー名
+                                <div>
+                                    <select name="companyName" class="form-control" id="companyName" data-toggle="select">
+                                        <option value="">全て</option>
+                                        @foreach ($companies as $company)
+                                            <option value="{{ $company->company_name }}" @if ($companyName=='{{ $company->company_name }}') selected @endif>{{ $company->company_name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </label>
+                        </div>
+
+                        <div>
+                            <input type="submit" class="btn" value="検索">
+                        </div>
+                    </div>
+                </form>
+            </div>
+
             <table class="table table">
                 <thead>
                     <tr>

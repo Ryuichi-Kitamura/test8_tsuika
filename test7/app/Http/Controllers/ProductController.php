@@ -94,4 +94,40 @@ class ProductController extends Controller
         // 処理が完了したらeditにリダイレクト
         return redirect(route('edit', $id));
     }
+
+    /**
+     * 検索処理
+     */
+    public function searchProducts(Request $request)
+    {
+        //検索フォームに入力された値を取得
+        $productName = $request->input('productName');
+        $companyName = $request->input('companyName');
+
+        $query = Product::query();
+        //テーブル結合
+        $query->join('companies', function ($query) use ($request) {
+            $query->on('products.company_id', '=', 'companies.id');
+            });
+
+        if(!empty($productName)) {
+            $query->where('products.product_name', 'LIKE', "%{$productName}%");
+        }
+
+        if(!empty($companyName)) {
+            $query->where('companies.company_name', 'LIKE', $companyName);
+        }
+
+        $products = $query
+        ->select('products.id', 'companies.id as company_id', 'companies.company_name', 'products.product_name',
+        'products.price', 'products.stock', 'products.comment', 'products.img_path')
+        ->get();
+
+        $companies = DB::table('companies')
+        ->select('companies.id', 'companies.company_name')
+        ->orderBy("companies.id")
+        ->get();
+
+        return view('products', compact('products', 'companies', 'productName', 'companyName'));
+    }
 }
