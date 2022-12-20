@@ -70,6 +70,10 @@
                 </form>
             </div>
 
+            <div>
+                <a href="{{ route('regist') }}" class="btn btn-success">新規登録</a>
+            </div>
+
             <table class="table table">
                 <thead>
                     <tr>

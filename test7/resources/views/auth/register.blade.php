@@ -73,5 +73,6 @@
             </div>
         </div>
     </div>
+    <a href="{{ route('login') }}" class="btn btn-secondary">戻る</a>
 </div>
 @endsection

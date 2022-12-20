@@ -7,6 +7,9 @@
         <div class="row">
             <h1>商品情報編集画面</h1>
             <form action="{{ route('edit', $product->id) }}" method="post">
+                <div>
+                    商品情報ID : {{ $product->id }}
+                </div>
                 @csrf
 
                 <div class="form-group">
@@ -55,5 +58,6 @@
                 <button type="submit" class="btn btn-default">更新</button>
             </form>
         </div>
+        <a href="{{ route('show', ['id'=>$product->id]) }}" class="btn btn-secondary">戻る</a>
     </div>
 @endsection

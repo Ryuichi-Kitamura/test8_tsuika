@@ -28,4 +28,6 @@
         </tr>
     </tbody>
 </table>
+<a href="{{ route('edit', ['id'=>$product->id]) }}" class="btn btn-info">編集</a>
+<a href="{{ route('search') }}" class="btn btn-secondary">戻る</a>
 @endsection

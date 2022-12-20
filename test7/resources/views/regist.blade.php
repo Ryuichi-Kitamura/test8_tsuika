@@ -55,5 +55,6 @@
                 <button type="submit" class="btn btn-default">登録</button>
             </form>
         </div>
+        <a href="{{ route('search') }}" class="btn btn-secondary">戻る</a>
     </div>
 @endsection
