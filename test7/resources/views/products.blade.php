@@ -1,11 +1,13 @@
-@extends('layouts.app_layout')
+@extends('layouts.app')
+
+@section('title', '商品情報一覧画面')
+
+@section('content')
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-
-        <title>Laravel</title>
 
         <!-- Fonts -->
         <link href="https://fonts.bunny.net/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
@@ -22,22 +24,8 @@
         </style>
     </head>
     <body class="antialiased">
-        <!-- <div class="relative flex items-top justify-center min-h-screen bg-gray-100 dark:bg-gray-900 sm:items-center py-4 sm:pt-0"> -->
-        <div>
-            @if (Route::has('login'))
-                <div>
-                    @auth
-                        <a href="{{ url('/home') }}" class="text-sm text-gray-700 dark:text-gray-500 underline">Home</a>
-                    @else
-                        <a href="{{ route('login') }}" class="text-sm text-gray-700 dark:text-gray-500 underline">Log in</a>
-
-                        @if (Route::has('register'))
-                            <a href="{{ route('register') }}" class="ml-4 text-sm text-gray-700 dark:text-gray-500 underline">Register</a>
-                        @endif
-                    @endauth
-                </div>
-            @endif
-
+        <div class="container">
+            <h1>商品情報一覧画面</h1>
             <div class="search">
                 <form action="{{ route('search') }}" method="GET">
                 @csrf
@@ -64,7 +52,7 @@
                         </div>
 
                         <div>
-                            <input type="submit" class="btn" value="検索">
+                            <input type="submit" class="btn btn-dark" value="検索">
                         </div>
                     </div>
                 </form>
@@ -74,15 +62,15 @@
                 <a href="{{ route('regist') }}" class="btn btn-success">新規登録</a>
             </div>
 
-            <table class="table table">
+            <table class="table table-striped">
                 <thead>
                     <tr>
                         <th>商品ID</th>
                         <th>企業ID</th>
                         <th>企業名</th>
                         <th>商品名</th>
-                        <th>値段</th>
-                        <th>在庫</th>
+                        <th>価格</th>
+                        <th>在庫数</th>
                         <th>コメント</th>
                         <th>画像パス</th>
                         <th>詳細表示ボタン</th>
@@ -104,7 +92,7 @@
                         <td>
                             <form action="{{ route('destroy', ['id'=>$product->id]) }}" method="POST">
                                 @csrf
-                                <button type="submit" class="btn btn-destroy">削除</button>
+                                <button type="submit" class="btn btn-danger">削除</button>
                             </form>
                         </td>
                     </tr>
@@ -114,3 +102,4 @@
         </div>
     </body>
 </html>
+@endsection

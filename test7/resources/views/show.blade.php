@@ -1,10 +1,11 @@
-@extends('layouts.app_layout')
+@extends('layouts.app')
 
 @section('title', '商品情報詳細画面')
 
 @section('content')
-<h1>商品情報</h1>
-<table class="table table">
+<div class="container">
+<h1>商品情報詳細画面</h1>
+<table class="table table-striped">
     <thead>
         <tr>
             <th>商品情報ID</th>
@@ -28,6 +29,11 @@
         </tr>
     </tbody>
 </table>
-<a href="{{ route('edit', ['id'=>$product->id]) }}" class="btn btn-info">編集</a>
-<a href="{{ route('search') }}" class="btn btn-secondary">戻る</a>
+<div>
+    <a href="{{ route('edit', ['id'=>$product->id]) }}" class="btn btn-info">編集</a>
+</div>
+<div>
+    <a href="{{ route('search') }}" class="btn btn-secondary">戻る</a>
+</div>
+</div>
 @endsection

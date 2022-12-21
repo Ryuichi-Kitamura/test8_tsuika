@@ -68,8 +68,8 @@ class ProductController extends Controller
      */
     public function showEditForm($id)
     {
-        $product = Product::find($id);
-
+        $model = new Product();
+        $product = $model->getProduct($id);
         return view('edit', compact('product'));
     }
 

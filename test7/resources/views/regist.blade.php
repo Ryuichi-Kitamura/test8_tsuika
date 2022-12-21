@@ -1,10 +1,10 @@
-@extends('layouts.app_layout')
+@extends('layouts.app')
 
 @section('title', '商品情報登録画面')
 
 @section('content')
     <div class="container">
-        <div class="row">
+        <div>
             <h1>商品情報登録画面</h1>
             <form action="{{ route('submit') }}" method="post">
                 @csrf
@@ -24,15 +24,15 @@
                     @endif
                 </div>
                 <div class="form-group">
-                    <label for="price">値段</label>
-                    <input type="number" class="form-control" id="price" name="price" placeholder="値段">
+                    <label for="price">価格</label>
+                    <input type="number" class="form-control" id="price" name="price" placeholder="価格">
                     @if($errors->has('price'))
                         <p>{{ $errors->first('price') }}</p>
                     @endif
                 </div>
                 <div class="form-group">
-                    <label for="stock">在庫</label>
-                    <input type="number" class="form-control" id="stock" name="stock" placeholder="在庫">
+                    <label for="stock">在庫数</label>
+                    <input type="number" class="form-control" id="stock" name="stock" placeholder="在庫数">
                     @if($errors->has('stock'))
                         <p>{{ $errors->first('stock') }}</p>
                     @endif
@@ -52,7 +52,7 @@
                     @endif
                 </div>
 
-                <button type="submit" class="btn btn-default">登録</button>
+                <button type="submit" class="btn btn-success">登録</button>
             </form>
         </div>
         <a href="{{ route('search') }}" class="btn btn-secondary">戻る</a>
