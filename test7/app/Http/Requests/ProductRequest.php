@@ -24,7 +24,7 @@ class ProductRequest extends FormRequest
     public function rules()
     {
         return [
-            'companyId' => 'required | integer',
+            'companyName' => 'required',
             'productName' => 'required | max:255',
             'price' => 'required | integer',
             'stock' => 'required | integer',
@@ -41,7 +41,7 @@ class ProductRequest extends FormRequest
     public function attributes()
     {
         return [
-            'companyId' => '企業ID',
+            'companyName' => 'メーカー',
             'productName' => '商品名',
             'price' => '値段',
             'stock' => '在庫',
@@ -57,7 +57,7 @@ class ProductRequest extends FormRequest
      */
     public function messages() {
         return [
-            'companyId.required' => ':attributeは必須項目です。',
+            'companyName.required' => ':attributeは必須項目です。',
             'productName.required' => ':attributeは必須項目です。',
             'price.required' => ':attributeは必須項目です。',
             'stock.required' => ':attributeは必須項目です。',
@@ -65,10 +65,9 @@ class ProductRequest extends FormRequest
             'productName.max' => ':attributeは:max字以内で入力してください。',
             'comment.max' => ':attributeは:max字以内で入力してください。',
             'imgPath.max' => ':attributeは:max字以内で入力してください。',
-            
-            'companyId.required' => ':attributeは整数で入力してください。',
-            'price.required' => ':attributeは整数で入力してください。',
-            'stock.required' => ':attributeは整数で入力してください。',
+
+            'price.integer' => ':attributeは整数で入力してください。',
+            'stock.integer' => ':attributeは整数で入力してください。',
         ];
     }
 }

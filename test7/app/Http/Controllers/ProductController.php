@@ -18,7 +18,13 @@ class ProductController extends Controller
     }
 
     public function showRegistForm() {
-        return view('regist');
+        // 全メーカーを取得
+        $companies = DB::table('companies')
+        ->select('companies.id', 'companies.company_name')
+        ->orderBy("companies.id")
+        ->get();
+        
+        return view('regist', compact('companies'));
     }
 
     public function registSubmit(ProductRequest $request) {
@@ -70,7 +76,14 @@ class ProductController extends Controller
     {
         $model = new Product();
         $product = $model->getProduct($id);
-        return view('edit', compact('product'));
+
+        // 全メーカーを取得
+        $companies = DB::table('companies')
+        ->select('companies.id', 'companies.company_name')
+        ->orderBy("companies.id")
+        ->get();
+
+        return view('edit', compact('product', 'companies'));
     }
 
     /**
@@ -123,6 +136,7 @@ class ProductController extends Controller
         'products.price', 'products.stock', 'products.comment', 'products.img_path')
         ->get();
 
+        // 全メーカーを取得
         $companies = DB::table('companies')
         ->select('companies.id', 'companies.company_name')
         ->orderBy("companies.id")

@@ -10,17 +10,22 @@
                 @csrf
 
                 <div class="form-group">
-                    <label for="companyId">企業ID</label>
-                    <input type="number" class="form-control" id="companyId" name="companyId" placeholder="企業ID">
-                    @if($errors->has('companyId'))
-                        <p>{{ $errors->first('companyId') }}</p>
-                    @endif
-                </div>
-                <div class="form-group">
                     <label for="productName">商品名</label>
                     <input type="text" class="form-control" id="productName" name="productName" placeholder="商品名">
                     @if($errors->has('productName'))
                         <p>{{ $errors->first('productName') }}</p>
+                    @endif
+                </div>
+                <div class="form-group">
+                    <label for="companyName">メーカー</label>
+                    <select class="form-control" id="companyName" name="companyName" placeholder="メーカー">
+                        <option value="" disabled selected></option>
+                    @foreach ($companies as $company)
+                        <option value="{{ $company->company_name }}">{{ $company->company_name }}</option>
+                    @endforeach
+                    </select>
+                    @if($errors->has('companyName'))
+                        <p>{{ $errors->first('companyName') }}</p>
                     @endif
                 </div>
                 <div class="form-group">

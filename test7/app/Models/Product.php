@@ -34,9 +34,12 @@ class Product extends Model
 
     public function registProduct($data) {
         // 登録処理
+
+        $company = $this->getCompanyByName($data->companyName);
+
         DB::table('products')
         ->insert([
-            'company_id' => $data->companyId,
+            'company_id' => $company->id,
             'product_name' => $data->productName,
             'price' => $data->price,
             'stock' => $data->stock,
@@ -50,12 +53,13 @@ class Product extends Model
     /**
      * 更新処理
      */
-    public function updateProduct($request, $product)
-    {
+    public function updateProduct($request, $product) {
+        $company = $this->getCompanyByName($request->companyName);
+
         DB::table('products')
         ->where('id', $product->id)
         ->update([
-            'company_id' => $request->companyId,
+            'company_id' => $company->id,
             'product_name' => $request->productName,
             'price' => $request->price,
             'stock' => $request->stock,
@@ -63,5 +67,15 @@ class Product extends Model
             'img_path' => $request->imgPath,
             'updated_at' => now(),
         ]);
+    }
+
+    public function getCompanyByName($companyName) {
+        // companiesテーブルからメーカー名に一致するデータを1件取得
+        $company = DB::table('companies')
+        ->select('companies.id', 'companies.company_name')
+        ->where('companies.company_name', '=', $companyName)
+        ->first();
+
+        return $company;
     }
 }

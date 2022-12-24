@@ -20,11 +20,12 @@
                     @endif
                 </div>
                 <div class="form-group">
-                    <label for="companyId">メーカー</label>
-                    <input type="text" class="form-control" id="companyId" name="companyId" placeholder="メーカー" value="{{ $product->company_name }}">
-                    @if($errors->has('companyId'))
-                        <p>{{ $errors->first('companyId') }}</p>
-                    @endif
+                    <label for="companyName">メーカー</label>
+                    <select class="form-control" id="companyName" name="companyName" placeholder="メーカー" value="{{ $product->company_name }}">
+                    @foreach ($companies as $company)
+                        <option>{{ $company->company_name }}</option>
+                    @endforeach
+                    </select>
                 </div>
                 <div class="form-group">
                     <label for="price">価格</label>
