@@ -29,7 +29,7 @@ class ProductRequest extends FormRequest
             'price' => 'required | integer',
             'stock' => 'required | integer',
             'comment' => 'max:10000',
-            'imgPath' => 'max:255',
+            'image' => 'mimes:jpeg,jpg,png',
         ];
     }
 
@@ -46,7 +46,7 @@ class ProductRequest extends FormRequest
             'price' => '値段',
             'stock' => '在庫',
             'comment' => 'コメント',
-            'imgPath' => '画像パス',
+            'image' => '商品画像',
         ];
     }
 
@@ -64,10 +64,11 @@ class ProductRequest extends FormRequest
 
             'productName.max' => ':attributeは:max字以内で入力してください。',
             'comment.max' => ':attributeは:max字以内で入力してください。',
-            'imgPath.max' => ':attributeは:max字以内で入力してください。',
 
             'price.integer' => ':attributeは整数で入力してください。',
             'stock.integer' => ':attributeは整数で入力してください。',
+
+            'image.mimes' => ':attributeは画像ファイルをアップロードしてください。(jpeg,jpg,png)',
         ];
     }
 }

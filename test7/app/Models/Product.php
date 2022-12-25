@@ -35,6 +35,11 @@ class Product extends Model
     public function registProduct($data) {
         // 登録処理
 
+        // アップロードされたファイルの取得
+        $image = $data->file('image');
+        // ファイルの保存とパスの取得
+        $path = isset($image) ? $image->store('images', 'public') : '';
+
         $company = $this->getCompanyByName($data->companyName);
 
         DB::table('products')
@@ -44,7 +49,8 @@ class Product extends Model
             'price' => $data->price,
             'stock' => $data->stock,
             'comment' => $data->comment,
-            'img_path' => $data->imgPath,
+            //'img_path' => $data->imgPath,
+            'img_path' => $path,
             'created_at' => now(),
             'updated_at' => now(),
         ]);
@@ -54,6 +60,18 @@ class Product extends Model
      * 更新処理
      */
     public function updateProduct($request, $product) {
+
+        // アップロードされたファイルの取得
+        $image = $request->file('image');
+        // ファイルの保存とパスの取得
+        $path = $product->img_path;
+        if (isset($image)) {
+            // 現在の画像ファイルの削除
+            \Storage::disk('public')->delete($path);
+            // 選択された画像ファイルを保存してパスをセット
+            $path = $image->store('images', 'public');
+        }
+
         $company = $this->getCompanyByName($request->companyName);
 
         DB::table('products')
@@ -64,7 +82,8 @@ class Product extends Model
             'price' => $request->price,
             'stock' => $request->stock,
             'comment' => $request->comment,
-            'img_path' => $request->imgPath,
+            //'img_path' => $request->imgPath,
+            'img_path' => "$path",
             'updated_at' => now(),
         ]);
     }

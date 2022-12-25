@@ -72,7 +72,7 @@
                         <th>価格</th>
                         <th>在庫数</th>
                         <th>コメント</th>
-                        <th>画像パス</th>
+                        <th>商品画像</th>
                         <th>詳細表示ボタン</th>
                         <th>削除ボタン</th>
                     </tr>
@@ -87,7 +87,16 @@
                         <td>{{ $product->price }}</td>
                         <td>{{ $product->stock }}</td>
                         <td>{{ $product->comment }}</td>
-                        <td><img src="{{ $product->img_path }}"></td>
+                        
+
+                        <td>
+                        @if ($product->img_path !=='')
+                        <img src="{{ asset('storage/'.$product->img_path)}}">
+                        @else
+                        no image
+                        @endif
+                        </td>
+
                         <td><a href="{{ route('show', ['id'=>$product->id]) }}" class="btn btn-primary">詳細表示</a></td>
                         <td>
                             <form action="{{ route('destroy', ['id'=>$product->id]) }}" method="POST">

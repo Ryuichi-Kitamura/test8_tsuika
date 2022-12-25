@@ -23,7 +23,7 @@ class ProductController extends Controller
         ->select('companies.id', 'companies.company_name')
         ->orderBy("companies.id")
         ->get();
-        
+
         return view('regist', compact('companies'));
     }
 
@@ -63,10 +63,16 @@ class ProductController extends Controller
     {
         // Productsテーブルから指定のIDのレコード1件を取得
         $product = Product::find($id);
+        // ファイルの保存とパスの取得
+        $path = $product->img_path;
+        if ($path !== '') {
+            // 現在の画像ファイルの削除
+            \Storage::disk('public')->delete($path);
+        }
         // レコードを削除
         $product->delete();
         // 削除したら一覧画面にリダイレクト
-        return redirect(route('products'));
+        return redirect(route('search'));
     }
 
     /**

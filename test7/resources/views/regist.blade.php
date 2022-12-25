@@ -6,7 +6,7 @@
     <div class="container">
         <div>
             <h1>商品情報登録画面</h1>
-            <form action="{{ route('submit') }}" method="post">
+            <form action="{{ route('submit') }}" enctype="multipart/form-data" method="post">
                 @csrf
 
                 <div class="form-group">
@@ -50,10 +50,10 @@
                     @endif
                 </div>
                 <div class="form-group">
-                    <label for="imgPath">画像パス</label>
-                    <input type="url" class="form-control" id="imgPath" name="imgPath" placeholder="画像パス">
-                    @if($errors->has('imgPath'))
-                        <p>{{ $errors->first('imgPath') }}</p>
+                    <label for="image">商品画像</label>
+                    <input type="file" class="form-control" id="image" name="image">
+                    @if($errors->has('image'))
+                        <p>{{ $errors->first('image') }}</p>
                     @endif
                 </div>
 

@@ -6,7 +6,7 @@
     <div class="container">
         <div>
             <h1>商品情報編集画面</h1>
-            <form action="{{ route('edit', $product->id) }}" method="post">
+            <form action="{{ route('edit', $product->id) }}" enctype="multipart/form-data" method="post">
                 <div>
                     商品情報ID : {{ $product->id }}
                 </div>
@@ -49,10 +49,12 @@
                     @endif
                 </div>
                 <div class="form-group">
-                    <label for="imgPath">画像パス</label>
-                    <input type="url" class="form-control" id="imgPath" name="imgPath" placeholder="画像パス" value="{{ $product->img_path }}">
-                    @if($errors->has('imgPath'))
-                        <p>{{ $errors->first('imgPath') }}</p>
+                    <!--<label for="imgPath">画像パス</label>
+                    <input type="url" class="form-control" id="imgPath" name="imgPath" placeholder="画像パス" value="{{ $product->img_path }}">-->
+                    <label for="image">商品画像</label>
+                    <input type="file" class="form-control" id="image" name="image">
+                    @if($errors->has('image'))
+                        <p>{{ $errors->first('image') }}</p>
                     @endif
                 </div>
 

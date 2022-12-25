@@ -20,7 +20,13 @@
     <tbody>
         <tr>
             <td>{{ $product->id }}</td>
-            <td><img src="{{ $product->img_path }}"></td>
+            <td>
+            @if ($product->img_path !=='')
+            <img src="{{ asset('storage/'.$product->img_path)}}">
+             @else
+            no image
+            @endif
+            </td>
             <td>{{ $product->product_name }}</td>
             <td>{{ $product->company_name }}</td>
             <td>{{ $product->price }}</td>
