@@ -8,48 +8,25 @@ use Illuminate\Support\Facades\DB;
 
 class Product extends Model
 {
-    public function getList() {
-        // productsテーブルからデータを取得
-        $products = DB::table('products')
-        ->select('products.id', 'companies.id as company_id', 'companies.company_name', 'products.product_name',
-        'products.price', 'products.stock', 'products.comment', 'products.img_path')
-        ->join('companies', 'products.company_id', '=', 'companies.id')
-        ->orderBy("products.id")
-        ->get();
 
-        return $products;
-    }
-
-    public function getProduct($id) {
-        // productsテーブルから商品IDに一致するデータを1件取得
-        $product = DB::table('products')
-        ->select('products.id', 'companies.id as company_id', 'companies.company_name', 'products.product_name',
-        'products.price', 'products.stock', 'products.comment', 'products.img_path')
-        ->where('products.id', '=', $id)
-        ->join('companies', 'products.company_id', '=', 'companies.id')
-        ->first();
-
-        return $product;
-    }
-
-    public function registProduct($data) {
-        // 登録処理
-
+    /**
+     * 登録処理
+     */
+    public function registProduct($request) {
         // アップロードされたファイルの取得
-        $image = $data->file('image');
+        $image = $request->file('image');
         // ファイルの保存とパスの取得
         $path = isset($image) ? $image->store('images', 'public') : '';
-
-        $company = $this->getCompanyByName($data->companyName);
-
+        // セレクトボックスで選択されたメーカー
+        $company = $this->getCompanyByName($request->companyName);
+        // 登録
         DB::table('products')
         ->insert([
             'company_id' => $company->id,
-            'product_name' => $data->productName,
-            'price' => $data->price,
-            'stock' => $data->stock,
-            'comment' => $data->comment,
-            //'img_path' => $data->imgPath,
+            'product_name' => $request->productName,
+            'price' => $request->price,
+            'stock' => $request->stock,
+            'comment' => $request->comment,
             'img_path' => $path,
             'created_at' => now(),
             'updated_at' => now(),
@@ -60,7 +37,6 @@ class Product extends Model
      * 更新処理
      */
     public function updateProduct($request, $product) {
-
         // アップロードされたファイルの取得
         $image = $request->file('image');
         // ファイルの保存とパスの取得
@@ -71,9 +47,9 @@ class Product extends Model
             // 選択された画像ファイルを保存してパスをセット
             $path = $image->store('images', 'public');
         }
-
+        // セレクトボックスで選択されたメーカー
         $company = $this->getCompanyByName($request->companyName);
-
+        // 更新
         DB::table('products')
         ->where('id', $product->id)
         ->update([
@@ -82,19 +58,77 @@ class Product extends Model
             'price' => $request->price,
             'stock' => $request->stock,
             'comment' => $request->comment,
-            //'img_path' => $request->imgPath,
             'img_path' => "$path",
             'updated_at' => now(),
         ]);
     }
 
+    /**
+     * productsテーブルから商品IDに一致するデータを1件取得
+     */
+    public function getProduct($id) {
+        $product = DB::table('products')
+        ->select('products.id', 'companies.id as company_id', 'companies.company_name', 'products.product_name',
+        'products.price', 'products.stock', 'products.comment', 'products.img_path')
+        ->where('products.id', '=', $id)
+        ->join('companies', 'products.company_id', '=', 'companies.id')
+        ->first();
+
+        return $product;
+    }
+
+    /**
+     * companiesテーブルから全データを取得
+     */
+    public function getAllCompanies() {
+        $companies = DB::table('companies')
+        ->select('companies.id', 'companies.company_name')
+        ->orderBy("companies.id")
+        ->get();
+
+        return $companies;
+    }
+
+    /**
+     * companiesテーブルからメーカー名に一致するデータを1件取得
+     */
     public function getCompanyByName($companyName) {
-        // companiesテーブルからメーカー名に一致するデータを1件取得
         $company = DB::table('companies')
         ->select('companies.id', 'companies.company_name')
         ->where('companies.company_name', '=', $companyName)
         ->first();
 
         return $company;
+    }
+
+    /**
+     * 検索処理
+     */
+    public function searchProducts($request) {
+        // 検索フォームに入力された値を取得
+        $productName = $request->input('productName');
+        $companyName = $request->input('companyName');
+
+        $query = Product::query();
+        // テーブル結合
+        $query->join('companies', function ($query) use ($request) {
+            $query->on('products.company_id', '=', 'companies.id');
+            });
+        // 商品名の検索条件(部分一致)
+        if(!empty($productName)) {
+            $query->where('products.product_name', 'LIKE', "%{$productName}%");
+        }
+        // メーカー名の検索条件
+        if(!empty($companyName)) {
+            $query->where('companies.company_name', 'LIKE', $companyName);
+        }
+        // 検索条件に一致するデータを全て取得
+        $products = $query
+        ->select('products.id', 'companies.id as company_id', 'companies.company_name', 'products.product_name',
+        'products.price', 'products.stock', 'products.comment', 'products.img_path')
+        ->orderBy("products.id")
+        ->get();
+
+        return $products;
     }
 }

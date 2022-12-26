@@ -11,7 +11,6 @@
                     商品情報ID : {{ $product->id }}
                 </div>
                 @csrf
-                
                 <div class="form-group">
                     <label for="productName">商品名</label>
                     <input type="text" class="form-control" id="productName" name="productName" placeholder="商品名" value="{{ $product->product_name }}">
@@ -49,8 +48,6 @@
                     @endif
                 </div>
                 <div class="form-group">
-                    <!--<label for="imgPath">画像パス</label>
-                    <input type="url" class="form-control" id="imgPath" name="imgPath" placeholder="画像パス" value="{{ $product->img_path }}">-->
                     <label for="image">商品画像</label>
                     <input type="file" class="form-control" id="image" name="image">
                     @if($errors->has('image'))
@@ -61,6 +58,6 @@
                 <button type="submit" class="btn btn-info">更新</button>
             </form>
         </div>
-        <a href="{{ route('show', ['id'=>$product->id]) }}" class="btn btn-secondary">戻る</a>
+        <a href="{{ route('detail', ['id'=>$product->id]) }}" class="btn btn-secondary">戻る</a>
     </div>
 @endsection

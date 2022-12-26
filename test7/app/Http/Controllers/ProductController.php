@@ -9,26 +9,47 @@ use Illuminate\Support\Facades\DB;
 
 class ProductController extends Controller
 {
-    public function showProducts() {
-        // インスタンス生成
-        $model = new Product();
-        $products = $model->getList();
-
-        return view('products', ['products' => $products]);
-    }
-
+    /**
+     * 登録画面の表示
+     */
     public function showRegistForm() {
         // 全メーカーを取得
-        $companies = DB::table('companies')
-        ->select('companies.id', 'companies.company_name')
-        ->orderBy("companies.id")
-        ->get();
+        $model = new Product();
+        $companies = $model->getAllCompanies();
 
         return view('regist', compact('companies'));
     }
 
-    public function registSubmit(ProductRequest $request) {
+    /**
+     * 詳細画面の表示
+     */
+    public function showDetail($id)
+    {
+        // IDに一致するデータを1件取得
+        $model = new Product();
+        $product = $model->getProduct($id);
+        return view('detail', compact('product'));
+    }
 
+    /**
+     * 編集画面の表示
+     */
+    public function showEditForm($id)
+    {
+        $model = new Product();
+        $product = $model->getProduct($id);
+
+        // 全メーカーを取得
+        $model = new Product();
+        $companies = $model->getAllCompanies();
+
+        return view('edit', compact('product', 'companies'));
+    }
+
+    /**
+     * 登録処理
+     */
+    public function registSubmit(ProductRequest $request) {
         // トランザクション開始
         DB::beginTransaction();
     
@@ -47,13 +68,25 @@ class ProductController extends Controller
     }
 
     /**
-     * 詳細画面の表示
+     * 更新処理
      */
-    public function show($id)
+    public function update(ProductRequest $request, $id)
     {
-        $model = new Product();
-        $product = $model->getProduct($id);
-        return view('show', compact('product'));
+        // トランザクション開始
+        DB::beginTransaction();
+    
+        try {
+            // 更新処理呼び出し
+            $product = Product::find($id);
+            $product->updateProduct($request, $product);
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollback();
+            return back();
+        }
+
+        // 処理が完了したらeditにリダイレクト
+        return redirect(route('edit', $id));
     }
 
     /**
@@ -76,78 +109,18 @@ class ProductController extends Controller
     }
 
     /**
-     * 編集画面の表示
-     */
-    public function showEditForm($id)
-    {
-        $model = new Product();
-        $product = $model->getProduct($id);
-
-        // 全メーカーを取得
-        $companies = DB::table('companies')
-        ->select('companies.id', 'companies.company_name')
-        ->orderBy("companies.id")
-        ->get();
-
-        return view('edit', compact('product', 'companies'));
-    }
-
-    /**
-     * 更新処理
-     */
-    public function update(ProductRequest $request, $id)
-    {
-        // トランザクション開始
-        DB::beginTransaction();
-    
-        try {
-            // 登録処理呼び出し
-            $product = Product::find($id);
-            $product->updateProduct($request, $product);
-            DB::commit();
-        } catch (\Exception $e) {
-            DB::rollback();
-            return back();
-        }
-
-        // 処理が完了したらeditにリダイレクト
-        return redirect(route('edit', $id));
-    }
-
-    /**
      * 検索処理
      */
     public function searchProducts(Request $request)
     {
-        //検索フォームに入力された値を取得
-        $productName = $request->input('productName');
-        $companyName = $request->input('companyName');
-
-        $query = Product::query();
-        //テーブル結合
-        $query->join('companies', function ($query) use ($request) {
-            $query->on('products.company_id', '=', 'companies.id');
-            });
-
-        if(!empty($productName)) {
-            $query->where('products.product_name', 'LIKE', "%{$productName}%");
-        }
-
-        if(!empty($companyName)) {
-            $query->where('companies.company_name', 'LIKE', $companyName);
-        }
-
-        $products = $query
-        ->select('products.id', 'companies.id as company_id', 'companies.company_name', 'products.product_name',
-        'products.price', 'products.stock', 'products.comment', 'products.img_path')
-        ->get();
+        // 検索結果を取得
+        $model = new Product();
+        $products = $model->searchProducts($request);
 
         // 全メーカーを取得
-        $companies = DB::table('companies')
-        ->select('companies.id', 'companies.company_name')
-        ->orderBy("companies.id")
-        ->get();
+        $model = new Product();
+        $companies = $model->getAllCompanies();
 
-        return view('products', compact('products', 'companies', 'productName', 'companyName'));
+        return view('products', compact('products', 'companies'));
     }
 }
