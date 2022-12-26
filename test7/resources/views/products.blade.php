@@ -66,13 +66,12 @@
                 <thead>
                     <tr>
                         <th>商品ID</th>
-                        <th>企業ID</th>
-                        <th>企業名</th>
+                        <th>商品画像</th>
                         <th>商品名</th>
                         <th>価格</th>
                         <th>在庫数</th>
                         <th>コメント</th>
-                        <th>商品画像</th>
+                        <th>メーカー名</th>
                         <th>詳細表示ボタン</th>
                         <th>削除ボタン</th>
                     </tr>
@@ -81,14 +80,6 @@
                 @foreach ($products as $product)
                     <tr>
                         <td>{{ $product->id }}</td>
-                        <td>{{ $product->company_id }}</td>
-                        <td>{{ $product->company_name }}</td>
-                        <td>{{ $product->product_name }}</td>
-                        <td>{{ $product->price }}</td>
-                        <td>{{ $product->stock }}</td>
-                        <td>{{ $product->comment }}</td>
-                        
-
                         <td>
                         @if ($product->img_path !=='')
                         <img src="{{ asset('storage/'.$product->img_path)}}">
@@ -96,12 +87,20 @@
                         no image
                         @endif
                         </td>
+                        <td>{{ $product->product_name }}</td>
+                        <td>{{ $product->price }}</td>
+                        <td>{{ $product->stock }}</td>
+                        <td>{{ $product->comment }}</td>
+                        
+
+                        
+                        <td>{{ $product->company_name }}</td>
 
                         <td><a href="{{ route('show', ['id'=>$product->id]) }}" class="btn btn-primary">詳細表示</a></td>
                         <td>
                             <form action="{{ route('destroy', ['id'=>$product->id]) }}" method="POST">
                                 @csrf
-                                <button type="submit" class="btn btn-danger">削除</button>
+                                <button type="submit" class="btn btn-danger" onClick="delete_alert(event);return false;">削除</button>
                             </form>
                         </td>
                     </tr>
@@ -109,6 +108,7 @@
                 </tbody>
             </table>
         </div>
+        <script src="{{ asset('js/app.js') }}"></script>
     </body>
 </html>
 @endsection

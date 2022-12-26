@@ -26,8 +26,8 @@ class ProductRequest extends FormRequest
         return [
             'companyName' => 'required',
             'productName' => 'required | max:255',
-            'price' => 'required | integer',
-            'stock' => 'required | integer',
+            'price' => 'required | integer | min:0',
+            'stock' => 'required | integer | min:0',
             'comment' => 'max:10000',
             'image' => 'mimes:jpeg,jpg,png',
         ];
@@ -67,6 +67,9 @@ class ProductRequest extends FormRequest
 
             'price.integer' => ':attributeは整数で入力してください。',
             'stock.integer' => ':attributeは整数で入力してください。',
+
+            'price.min' => ':attributeは0以上で入力してください。',
+            'stock.min' => ':attributeは0以上で入力してください。',
 
             'image.mimes' => ':attributeは画像ファイルをアップロードしてください。(jpeg,jpg,png)',
         ];

@@ -11,14 +11,14 @@
 
                 <div class="form-group">
                     <label for="productName">商品名</label>
-                    <input type="text" class="form-control" id="productName" name="productName" placeholder="商品名">
+                    <input type="text" class="form-control" id="productName" name="productName" placeholder="商品名" value="{{ old('productName') }}">
                     @if($errors->has('productName'))
                         <p>{{ $errors->first('productName') }}</p>
                     @endif
                 </div>
                 <div class="form-group">
                     <label for="companyName">メーカー</label>
-                    <select class="form-control" id="companyName" name="companyName" placeholder="メーカー">
+                    <select class="form-control" id="companyName" name="companyName" placeholder="メーカー" value="{{ old('companyName') }}">
                         <option value="" disabled selected></option>
                     @foreach ($companies as $company)
                         <option value="{{ $company->company_name }}">{{ $company->company_name }}</option>
@@ -30,21 +30,21 @@
                 </div>
                 <div class="form-group">
                     <label for="price">価格</label>
-                    <input type="number" class="form-control" id="price" name="price" placeholder="価格">
+                    <input type="number" class="form-control" id="price" name="price" placeholder="価格" value="{{ old('price') }}">
                     @if($errors->has('price'))
                         <p>{{ $errors->first('price') }}</p>
                     @endif
                 </div>
                 <div class="form-group">
                     <label for="stock">在庫数</label>
-                    <input type="number" class="form-control" id="stock" name="stock" placeholder="在庫数">
+                    <input type="number" class="form-control" id="stock" name="stock" placeholder="在庫数" value="{{ old('stock') }}">
                     @if($errors->has('stock'))
                         <p>{{ $errors->first('stock') }}</p>
                     @endif
                 </div>
                 <div class="form-group">
                     <label for="comment">コメント</label>
-                    <textarea class="form-control" id="comment" name="comment" placeholder="コメント"></textarea>
+                    <textarea class="form-control" id="comment" name="comment" placeholder="コメント">{{ old('comment') }}</textarea>
                     @if($errors->has('comment'))
                         <p>{{ $errors->first('comment') }}</p>
                     @endif
