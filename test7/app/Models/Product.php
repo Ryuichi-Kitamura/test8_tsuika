@@ -5,9 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
+use Kyslik\ColumnSortable\Sortable;
 
 class Product extends Model
 {
+    use Sortable;
+    // ソートを可能にするため結合先のテーブルのカラムを宣言
+    public $sortableAs = ['company_name'];
 
     /**
      * 登録処理
@@ -114,6 +118,8 @@ class Product extends Model
         $query->join('companies', function ($query) use ($request) {
             $query->on('products.company_id', '=', 'companies.id');
             });
+        // 一覧画面でソート可能にする
+        $query->sortable();
         // 商品名の検索条件(部分一致)
         if(!empty($productName)) {
             $query->where('products.product_name', 'LIKE', "%{$productName}%");

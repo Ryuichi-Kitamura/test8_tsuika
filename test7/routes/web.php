@@ -20,14 +20,17 @@ Route::get('/', function () {
 
 Auth::routes();
 
-// 一覧画面
-Route::get('/products', 'App\Http\Controllers\ProductController@searchProducts')->name('search')->middleware('auth');
-// 登録画面
-Route::get('/regist','App\Http\Controllers\ProductController@showRegistForm')->name('regist')->middleware('auth');
-// 詳細画面
-Route::get('/detail/{id}', 'App\Http\Controllers\ProductController@showDetail')->name('detail')->middleware('auth');
-// 編集画面
-Route::get('/edit/{id}','App\Http\Controllers\ProductController@showEditForm')->name('edit')->middleware('auth');
+Route::middleware('auth')->group(function () {
+    // ログイン時のみ表示する画面のルーティングをまとめて記載
+    // 一覧画面
+    Route::get('/products', 'App\Http\Controllers\ProductController@searchProducts')->name('search')->middleware('auth');
+    // 登録画面
+    Route::get('/regist','App\Http\Controllers\ProductController@showRegistForm')->name('regist')->middleware('auth');
+    // 詳細画面
+    Route::get('/detail/{id}', 'App\Http\Controllers\ProductController@showDetail')->name('detail')->middleware('auth');
+    // 編集画面
+    Route::get('/edit/{id}','App\Http\Controllers\ProductController@showEditForm')->name('edit')->middleware('auth');
+});
 
 // 削除
 Route::post('/destroy{id}', 'App\Http\Controllers\ProductController@destroy')->name('destroy');
