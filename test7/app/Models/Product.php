@@ -110,8 +110,18 @@ class Product extends Model
      */
     public function searchProducts($request) {
         // 検索フォームに入力された値を取得
+        // 商品名
         $productName = $request->input('productName');
+        // メーカー名
         $companyName = $request->input('companyName');
+        // 価格(下限)
+        $priceMin = $request->input('priceMin');
+        // 価格(上限)
+        $priceMax = $request->input('priceMax');
+        // 在庫数(下限)
+        $stockMin = $request->input('stockMin');
+        // 在庫数(上限)
+        $stockMax = $request->input('stockMax');
 
         $query = Product::query();
         // テーブル結合
@@ -128,6 +138,23 @@ class Product extends Model
         if(!empty($companyName)) {
             $query->where('companies.company_name', 'LIKE', $companyName);
         }
+        // 価格(下限)の検索条件
+        if(!empty($priceMin)) {
+            $query->where('price', '>=', $priceMin);
+        }
+        // 価格(上限)の検索条件
+        if(!empty($priceMax)) {
+            $query->where('price', '<=', $priceMax);
+        }
+        // 在庫数(下限)の検索条件
+        if(!empty($stockMin)) {
+            $query->where('stock', '>=', $stockMin);
+        }
+        // 在庫数(上限)の検索条件
+        if(!empty($stockMax)) {
+            $query->where('stock', '<=', $stockMax);
+        }
+
         // 検索条件に一致するデータを全て取得
         $products = $query
         ->select('products.id', 'companies.id as company_id', 'companies.company_name', 'products.product_name',

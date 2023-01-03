@@ -9,23 +9,51 @@
             <form action="{{ route('search') }}" method="GET">
             @csrf
                 <div class="form-group">
-                    <div>
+                    <div class="row">
                         <label for="productName">商品名</label>
-                            <div>
+                            <div class="col-auto">
                                 <input type="text" class="form-control" id="productName" name="productName">
                             </div>
                         </label>
                     </div>
 
-                    <div>
+                    <div class="row">
                         <label for="companyName">メーカー名</label>
-                            <div>
+                            <div class="col-auto">
                                 <select class="form-control" id="companyName" name="companyName" data-toggle="select">
                                     <option value="">全て</option>
                                     @foreach ($companies as $company)
                                         <option value="{{ $company->company_name }}">{{ $company->company_name }}</option>
                                     @endforeach
                                 </select>
+                            </div>
+                        </label>
+                    </div>
+
+                    <div class="row">
+                        <label for="price">価格(下限〜上限)</label>
+                            <div class="col-auto">
+                                <input type="number" class="form-control" id="price" name="priceMin">
+                            </div>
+                            <div class="col-auto">
+                                <p>〜</p>
+                            </div>
+                            <div class="col-auto">
+                                <input type="number" class="form-control" id="price" name="priceMax">
+                            </div>
+                        </label>
+                    </div>
+
+                    <div class="row">
+                        <label for="stock">在庫数(下限〜上限)</label>
+                            <div class="col-auto">
+                                <input type="number" class="form-control" id="stock" name="stockMin">
+                            </div>
+                            <div class="col-auto">
+                                <p>〜</p>
+                            </div>
+                            <div class="col-auto">
+                                <input type="number" class="form-control" id="stock" name="stockMax">
                             </div>
                         </label>
                     </div>
