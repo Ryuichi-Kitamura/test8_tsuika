@@ -33,13 +33,13 @@
                     <div class="row">
                         <label for="price">価格(下限〜上限)</label>
                             <div class="col-auto">
-                                <input type="number" class="form-control" id="price" name="priceMin">
+                                <input type="number" class="form-control" id="priceMin" name="priceMin">
                             </div>
                             <div class="col-auto">
                                 <p>〜</p>
                             </div>
                             <div class="col-auto">
-                                <input type="number" class="form-control" id="price" name="priceMax">
+                                <input type="number" class="form-control" id="priceMax" name="priceMax">
                             </div>
                         </label>
                     </div>
@@ -47,19 +47,22 @@
                     <div class="row">
                         <label for="stock">在庫数(下限〜上限)</label>
                             <div class="col-auto">
-                                <input type="number" class="form-control" id="stock" name="stockMin">
+                                <input type="number" class="form-control" id="stockMin" name="stockMin">
                             </div>
                             <div class="col-auto">
                                 <p>〜</p>
                             </div>
                             <div class="col-auto">
-                                <input type="number" class="form-control" id="stock" name="stockMax">
+                                <input type="number" class="form-control" id="stockMax" name="stockMax">
                             </div>
                         </label>
                     </div>
 
                     <div>
                         <input type="submit" class="btn btn-dark" value="検索">
+                    </div>
+                    <div>
+                        <input type="button" class="btn btn-dark" id="narrowDownButton" value="検索(jQuery)">
                     </div>
                 </div>
             </form>
@@ -69,7 +72,7 @@
             <a href="{{ route('regist') }}" class="btn btn-success">新規登録</a>
         </div>
 
-        <table class="table table-striped">
+        <table class="table table-striped" id="resultTable">
             <thead>
                 <tr>
                     <th>@sortablelink ('id', '商品ID')</th>
@@ -81,6 +84,7 @@
                     <th>@sortablelink ('company_name', 'メーカー名')</th>
                     <th>詳細表示ボタン</th>
                     <th>削除ボタン</th>
+                    <th>削除ボタン(jQuery)</th>
                 </tr>
             </thead>
             <tbody>
@@ -94,11 +98,11 @@
                         <p>no image</p>
                         @endif
                     </td>
-                    <td>{{ $product->product_name }}</td>
-                    <td>{{ $product->price }}</td>
-                    <td>{{ $product->stock }}</td>
+                    <td id="resultProductName">{{ $product->product_name }}</td>
+                    <td id="resultPrice">{{ $product->price }}</td>
+                    <td id="resultStock">{{ $product->stock }}</td>
                     <td>{{ $product->comment }}</td>
-                    <td>{{ $product->company_name }}</td>
+                    <td id="resultCompanyName">{{ $product->company_name }}</td>
                     <td><a href="{{ route('detail', ['id'=>$product->id]) }}" class="btn btn-primary">詳細表示</a></td>
                     <td>
                         <form action="{{ route('destroy', ['id'=>$product->id]) }}" method="POST">
@@ -106,6 +110,7 @@
                             <button type="submit" class="btn btn-danger" onClick="delete_alert(event);return false;">削除</button>
                         </form>
                     </td>
+                    <td><input type="button" class="btn btn-danger" id="deleteButton" value="削除(jQuery)"></td>
                 </tr>
                 @endforeach
             </tbody>
