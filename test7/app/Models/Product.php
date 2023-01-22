@@ -82,6 +82,17 @@ class Product extends Model
     }
 
     /**
+     * productsテーブルから商品IDに一致するデータの在庫数を取得
+     */
+    public function getStock($id) {
+        $stock = DB::table('products')
+        ->where('products.id', '=', $id)
+        ->value('stock');
+
+        return $stock;
+    }
+
+    /**
      * companiesテーブルから全データを取得
      */
     public function getAllCompanies() {
