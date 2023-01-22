@@ -59,10 +59,7 @@
                     </div>
 
                     <div>
-                        <input type="submit" class="btn btn-dark" value="検索">
-                    </div>
-                    <div>
-                        <input type="button" class="btn btn-dark" id="narrowDownButton" value="検索(jQuery)">
+                        <input type="button" class="btn btn-dark" id="narrowDownButton" value="検索">
                     </div>
                 </div>
             </form>
@@ -84,7 +81,6 @@
                     <th>@sortablelink ('company_name', 'メーカー名')</th>
                     <th>詳細表示ボタン</th>
                     <th>削除ボタン</th>
-                    <th>削除ボタン(jQuery)</th>
                 </tr>
             </thead>
             <tbody>
@@ -104,13 +100,7 @@
                     <td>{{ $product->comment }}</td>
                     <td id="resultCompanyName">{{ $product->company_name }}</td>
                     <td><a href="{{ route('detail', ['id'=>$product->id]) }}" class="btn btn-primary">詳細表示</a></td>
-                    <td>
-                        <form action="{{ route('destroy', ['id'=>$product->id]) }}" method="POST">
-                            @csrf
-                            <button type="submit" class="btn btn-danger" onClick="delete_alert(event);return false;">削除</button>
-                        </form>
-                    </td>
-                    <td><input type="button" class="btn btn-danger" id="deleteButton" value="削除(jQuery)"></td>
+                    <td><input type="button" class="btn btn-danger" id="deleteButton" value="削除"></td>
                 </tr>
                 @endforeach
             </tbody>
