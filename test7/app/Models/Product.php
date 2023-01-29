@@ -150,19 +150,19 @@ class Product extends Model
             $query->where('companies.company_name', 'LIKE', $companyName);
         }
         // 価格(下限)の検索条件
-        if(!empty($priceMin)) {
+        if(!empty($priceMin) || $priceMax == "0") {
             $query->where('price', '>=', $priceMin);
         }
         // 価格(上限)の検索条件
-        if(!empty($priceMax)) {
+        if(!empty($priceMax) || $priceMax == "0") {
             $query->where('price', '<=', $priceMax);
         }
         // 在庫数(下限)の検索条件
-        if(!empty($stockMin)) {
+        if(!empty($stockMin) || $stockMin == "0") {
             $query->where('stock', '>=', $stockMin);
         }
         // 在庫数(上限)の検索条件
-        if(!empty($stockMax)) {
+        if(!empty($stockMax) || $stockMax == "0") {
             $query->where('stock', '<=', $stockMax);
         }
 

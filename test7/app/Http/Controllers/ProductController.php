@@ -104,14 +104,12 @@ class ProductController extends Controller
         }
         // レコードを削除
         $product->delete();
-        // 削除したら一覧画面にリダイレクト
-        return redirect(route('search'));
     }
 
     /**
-     * 検索処理
+     * 一覧画面の表示
      */
-    public function searchProducts(Request $request)
+    public function search(Request $request)
     {
         // 検索結果を取得
         $model = new Product();
@@ -122,5 +120,17 @@ class ProductController extends Controller
         $companies = $model->getAllCompanies();
 
         return view('products', compact('products', 'companies'));
+    }
+
+    /**
+     * Ajaxによる検索処理
+     */
+    public function searchProducts(Request $request)
+    {
+        // 検索結果を取得
+        $model = new Product();
+        $products = $model->searchProducts($request);
+
+        return response()->json($products);
     }
 }

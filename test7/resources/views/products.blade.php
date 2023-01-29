@@ -57,9 +57,8 @@
                             </div>
                         </label>
                     </div>
-
                     <div>
-                        <input type="button" class="btn btn-dark" id="narrowDownButton" value="検索">
+                        <input type="button" class="btn btn-dark" id="searchButton" value="検索">
                     </div>
                 </div>
             </form>
