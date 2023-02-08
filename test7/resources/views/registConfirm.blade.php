@@ -8,9 +8,6 @@
             <h1>商品情報登録確認画面</h1>
             <form action="{{ route('registConfirm') }}" enctype="multipart/form-data" method="post">
                 @csrf
-                <div>
-                    商品名 : {{ $request->productName }}
-                </div>
                 <div class="form-group">
                     <label for="productName">商品名</label>
                     <input type="text" class="form-control" id="productName" name="productName" placeholder="商品名" value="{{ $request->productName }}" readonly>

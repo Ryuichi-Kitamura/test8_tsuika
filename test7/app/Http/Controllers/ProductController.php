@@ -61,7 +61,7 @@ class ProductController extends Controller
     /**
      * 本登録処理
      */
-    public function registConfirm(ProductRequest $request) {
+    public function registConfirm(Request $request) {
         // トランザクション開始
         DB::beginTransaction();
     
