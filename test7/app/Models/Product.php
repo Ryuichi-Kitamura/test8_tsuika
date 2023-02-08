@@ -17,12 +17,13 @@ class Product extends Model
      * 登録処理
      */
     public function registProduct($request) {
-        // アップロードされたファイルの取得
-        $image = $request->file('image');
-        // ファイルの保存とパスの取得
-        $path = isset($image) ? $image->store('images', 'public') : '';
         // セレクトボックスで選択されたメーカー
         $company = $this->getCompanyByName($request->companyName);
+        //
+        $imagePath = $request->image;
+        if($imagePath == null){
+            $imagePath = "";
+        }
         // 登録
         DB::table('products')
         ->insert([
@@ -31,7 +32,7 @@ class Product extends Model
             'price' => $request->price,
             'stock' => $request->stock,
             'comment' => $request->comment,
-            'img_path' => $path,
+            'img_path' => $imagePath,
             'created_at' => now(),
             'updated_at' => now(),
         ]);
@@ -62,7 +63,7 @@ class Product extends Model
             'price' => $request->price,
             'stock' => $request->stock,
             'comment' => $request->comment,
-            'img_path' => "$path",
+            'img_path' => $path,
             'updated_at' => now(),
         ]);
     }

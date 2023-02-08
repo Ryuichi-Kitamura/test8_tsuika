@@ -47,9 +47,21 @@ class ProductController extends Controller
     }
 
     /**
-     * 登録処理
+     * 仮登録処理
      */
     public function registSubmit(ProductRequest $request) {
+        // アップロードされたファイルの取得
+        $image = $request->file('image');
+        // ファイルの保存とパスの取得
+        $path = isset($image) ? $image->store('images', 'public') : '';
+
+        return view('registConfirm', compact('request', 'path'));
+    }
+
+    /**
+     * 本登録処理
+     */
+    public function registConfirm(ProductRequest $request) {
         // トランザクション開始
         DB::beginTransaction();
     
@@ -63,8 +75,8 @@ class ProductController extends Controller
             return back();
         }
     
-        // 処理が完了したらregistにリダイレクト
-        return redirect(route('regist'));
+        // 処理が完了したらsearchにリダイレクト
+        return redirect(route('search'));
     }
 
     /**

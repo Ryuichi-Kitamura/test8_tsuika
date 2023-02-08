@@ -26,6 +26,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/products', 'App\Http\Controllers\ProductController@search')->name('search');
     // 登録画面
     Route::get('/regist','App\Http\Controllers\ProductController@showRegistForm')->name('regist');
+    // 登録確認画面
+    Route::get('/registConfirm','App\Http\Controllers\ProductController@showRegistConfirm')->name('showRegistConfirm');
     // 詳細画面
     Route::get('/detail/{id}', 'App\Http\Controllers\ProductController@showDetail')->name('detail');
     // 編集画面
@@ -36,7 +38,9 @@ Route::middleware('auth')->group(function () {
 Route::post('/products', 'App\Http\Controllers\ProductController@searchProducts')->name('searchProducts');
 // 削除
 Route::post('/destroy{id}', 'App\Http\Controllers\ProductController@destroy')->name('destroy');
-// 登録
+// 仮登録(登録確認画面へ)
 Route::post('/regist','App\Http\Controllers\ProductController@registSubmit')->name('submit');
+// 本登録
+Route::post('/registConfirm','App\Http\Controllers\ProductController@registConfirm')->name('registConfirm');
 // 編集
 Route::post('/edit/{id}','App\Http\Controllers\ProductController@update')->name('update');

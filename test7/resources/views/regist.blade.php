@@ -56,7 +56,7 @@
                     @endif
                 </div>
 
-                <button type="submit" class="btn btn-success">登録</button>
+                <button type="submit" class="btn btn-success">確認画面へ</button>
             </form>
         </div>
         <a href="{{ route('search') }}" class="btn btn-secondary">戻る</a>

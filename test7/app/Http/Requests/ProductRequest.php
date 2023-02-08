@@ -29,7 +29,6 @@ class ProductRequest extends FormRequest
             'price' => 'required | integer | min:0',
             'stock' => 'required | integer | min:0',
             'comment' => 'max:10000',
-            'image' => 'mimes:jpeg,jpg,png',
         ];
     }
 
