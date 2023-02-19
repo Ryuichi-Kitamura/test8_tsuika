@@ -16,11 +16,11 @@ class Product extends Model
     /**
      * 登録処理
      */
-    public function registProduct($request) {
+    public function registProduct($session) {
         // セレクトボックスで選択されたメーカー
-        $company = $this->getCompanyByName($request->companyName);
-        //
-        $imagePath = $request->image;
+        $company = $this->getCompanyByName($session['companyName']);
+
+        $imagePath = $session['image'];
         if($imagePath == null){
             $imagePath = "";
         }
@@ -28,10 +28,10 @@ class Product extends Model
         DB::table('products')
         ->insert([
             'company_id' => $company->id,
-            'product_name' => $request->productName,
-            'price' => $request->price,
-            'stock' => $request->stock,
-            'comment' => $request->comment,
+            'product_name' => $session['productName'],
+            'price' => $session['price'],
+            'stock' => $session['stock'],
+            'comment' => $session['comment'],
             'img_path' => $imagePath,
             'created_at' => now(),
             'updated_at' => now(),

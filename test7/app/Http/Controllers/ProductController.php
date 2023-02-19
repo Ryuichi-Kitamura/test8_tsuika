@@ -54,21 +54,36 @@ class ProductController extends Controller
         $image = $request->file('image');
         // ファイルの保存とパスの取得
         $path = isset($image) ? $image->store('images', 'public') : '';
+        // リクエストからセッションの値を取得
+        $request->session()->put('productName', $request->productName);
+        $request->session()->put('companyName', $request->companyName);
+        $request->session()->put('price', $request->price);
+        $request->session()->put('stock', $request->stock);
+        $request->session()->put('comment', $request->comment);
+        $session = $request->session()->all();
 
-        return view('registConfirm', compact('request', 'path'));
+        return view('registConfirm', compact('session', 'path'));
     }
 
     /**
      * 本登録処理
      */
     public function registConfirm(Request $request) {
+        // リクエストからセッションを保持
+        $request->session()->put('productName', $request->productName);
+        $request->session()->put('companyName', $request->companyName);
+        $request->session()->put('price', $request->price);
+        $request->session()->put('stock', $request->stock);
+        $request->session()->put('comment', $request->comment);
+        $request->session()->put('image', $request->image);
+        $session = $request->session()->all();
         // トランザクション開始
         DB::beginTransaction();
     
         try {
             // 登録処理呼び出し
             $model = new Product();
-            $model->registProduct($request);
+            $model->registProduct($session);
             DB::commit();
         } catch (\Exception $e) {
             DB::rollback();
