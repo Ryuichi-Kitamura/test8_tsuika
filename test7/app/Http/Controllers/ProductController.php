@@ -60,6 +60,7 @@ class ProductController extends Controller
         $request->session()->put('price', $request->price);
         $request->session()->put('stock', $request->stock);
         $request->session()->put('comment', $request->comment);
+        $request->session()->put('image', $path);
         $session = $request->session()->all();
 
         return view('registConfirm', compact('session', 'path'));
@@ -69,13 +70,6 @@ class ProductController extends Controller
      * 本登録処理
      */
     public function registConfirm(Request $request) {
-        // リクエストからセッションを保持
-        $request->session()->put('productName', $request->productName);
-        $request->session()->put('companyName', $request->companyName);
-        $request->session()->put('price', $request->price);
-        $request->session()->put('stock', $request->stock);
-        $request->session()->put('comment', $request->comment);
-        $request->session()->put('image', $request->image);
         $session = $request->session()->all();
         // トランザクション開始
         DB::beginTransaction();
@@ -85,6 +79,8 @@ class ProductController extends Controller
             $model = new Product();
             $model->registProduct($session);
             DB::commit();
+            // 登録の重複対策
+            $request->session()->regenerateToken();
         } catch (\Exception $e) {
             DB::rollback();
             return back();
