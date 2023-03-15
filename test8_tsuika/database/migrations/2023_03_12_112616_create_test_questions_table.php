@@ -13,6 +13,9 @@ return new class extends Migration
     {
         Schema::create('test_questions', function (Blueprint $table) {
             $table->id();
+            $table->bigInteger('test_id')->unsigned()->nullable();
+            $table->foreign('test_id')->references('id')->on('tests')->onUpdate('CASCADE')->onDelete('SET NULL');
+            $table->string('question_text');
             $table->timestamps();
         });
     }

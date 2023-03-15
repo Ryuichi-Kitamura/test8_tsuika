@@ -13,6 +13,11 @@ return new class extends Migration
     {
         Schema::create('exam_settings', function (Blueprint $table) {
             $table->id();
+            $table->bigInteger('exam_id')->unsigned()->nullable();
+            $table->foreign('exam_id')->references('id')->on('exams')->onUpdate('CASCADE')->onDelete('SET NULL');
+            $table->bigInteger('user_id')->unsigned()->nullable();
+            $table->foreign('user_id')->references('id')->on('users')->onUpdate('CASCADE')->onDelete('SET NULL');
+            $table->boolean('is_passed')->nullable();
             $table->timestamps();
         });
     }

@@ -13,6 +13,10 @@ return new class extends Migration
     {
         Schema::create('curriculums', function (Blueprint $table) {
             $table->id();
+            $table->string('title');
+            $table->string('video_address');
+            $table->integer('subject_grade')->nullable();
+            $table->boolean('is_always')->nullable();
             $table->timestamps();
         });
     }

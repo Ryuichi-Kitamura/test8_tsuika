@@ -13,6 +13,11 @@ return new class extends Migration
     {
         Schema::create('test_settings', function (Blueprint $table) {
             $table->id();
+            $table->bigInteger('test_id')->unsigned()->nullable();
+            $table->foreign('test_id')->references('id')->on('tests')->onUpdate('CASCADE')->onDelete('SET NULL');
+            $table->bigInteger('user_id')->unsigned()->nullable();
+            $table->foreign('user_id')->references('id')->on('users')->onUpdate('CASCADE')->onDelete('SET NULL');
+            $table->boolean('is_passed')->nullable();
             $table->timestamps();
         });
     }

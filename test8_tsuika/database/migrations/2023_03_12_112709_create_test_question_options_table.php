@@ -13,6 +13,11 @@ return new class extends Migration
     {
         Schema::create('test_question_options', function (Blueprint $table) {
             $table->id();
+            $table->bigInteger('test_question_id')->unsigned()->nullable();
+            $table->foreign('test_question_id')->references('id')->on('test_questions')->onUpdate('CASCADE')->onDelete('SET NULL');
+            $table->integer('option_number');
+            $table->string('option_text');
+            $table->boolean('is_correct')->nullable();
             $table->timestamps();
         });
     }

@@ -13,6 +13,8 @@ return new class extends Migration
     {
         Schema::create('exams', function (Blueprint $table) {
             $table->id();
+            $table->string('title');
+            $table->integer('subject_grade')->nullable();
             $table->timestamps();
         });
     }

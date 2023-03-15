@@ -13,6 +13,11 @@ return new class extends Migration
     {
         Schema::create('curriculum_settings', function (Blueprint $table) {
             $table->id();
+            $table->bigInteger('curriculum_id')->unsigned()->nullable();
+            $table->foreign('curriculum_id')->references('id')->on('curriculums')->onUpdate('CASCADE')->onDelete('SET NULL');
+            $table->bigInteger('user_id')->unsigned()->nullable();
+            $table->foreign('user_id')->references('id')->on('users')->onUpdate('CASCADE')->onDelete('SET NULL');
+            $table->boolean('is_finished')->nullable();
             $table->timestamps();
         });
     }

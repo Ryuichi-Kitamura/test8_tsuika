@@ -13,6 +13,9 @@ return new class extends Migration
     {
         Schema::create('curriculum_details', function (Blueprint $table) {
             $table->id();
+            $table->bigInteger('curriculum_id')->unsigned()->nullable();
+            $table->foreign('curriculum_id')->references('id')->on('curriculums')->onUpdate('CASCADE')->onDelete('SET NULL');
+            $table->timestamp('stream_time')->nullable();
             $table->timestamps();
         });
     }

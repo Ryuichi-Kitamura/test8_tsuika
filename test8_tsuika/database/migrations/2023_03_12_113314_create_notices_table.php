@@ -13,6 +13,9 @@ return new class extends Migration
     {
         Schema::create('notices', function (Blueprint $table) {
             $table->id();
+            $table->string('title');
+            $table->string('text');
+            $table->integer('subject_grade')->nullable();
             $table->timestamps();
         });
     }
